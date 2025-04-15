@@ -1,0 +1,29 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-danger ">
+  <a class="navbar-brand " href="/">CONCERT NATION</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav mr-auto my-2 my-lg-0 navbar-nav-scroll" style="max-height: 100px;">
+        <li class="nav-item <%= title =='Concert Nation'? 'active' : '' %>">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item <%= title =='Update Events'? 'active' : '' %>">
+          <a class="nav-link" href="/admin/list_all_events">Update Events</a>
+        </li>
+        <li class="nav-item <%= title =='Register'? 'active' : '' %>">
+          <a class="nav-link" href="/admin">Register Event</a>
+        </li>
+          
+      </ul>
+      <% if(userName && userName.trim() !== ''){ %>
+        <form class="d-flex">
+          <a href="/users/logout" class="btn btn-outline-light" style="font-size: x-small; margin: auto; color: white;">Logout</a>
+        </form>
+      <% }else{ %>
+        <form class="d-flex">
+          <a href="/users/login" class="btn btn-outline-light" style="font-size: x-small; margin: auto; color: white;">Login</a>
+        </form>
+      <% } %>
+    </div>
+  </nav>

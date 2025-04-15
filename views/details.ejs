@@ -1,0 +1,90 @@
+
+
+  <div class="container col-md-8 mt-4 mb-4 bg-dark text-light rounded" >
+    <h1 class="head pt-3 pb-3"><%= event.concertName %></h1>
+    <img src="data:image/*;base64,<%=event.coverPic %>" alt="event Image" class="col-md-12">
+    <p class="mt-2" style="text-align:justify;">Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+      Ratione mollitia natus enim earum expedita? Odit quaerat dolorem sunt, 
+      culpa maiores ducimus consequatur dolore quod sed facere neque et aperiam reiciendis.</p>
+
+      <div class="row mt-4">
+        <div class="col-6">
+        <p>Event Location: <%= event.location %></p> 
+        <p>Event Date: <%= event.date %></p>
+        <p>Event Time: <%= event.eventTime %></p> 
+      </div> 
+      <div class="col-6" style="display: flex; flex-direction: column;text-align: center;">
+        <p>Tickets Left: <%= event.ticketsAvailable%></p>
+        <p>Ticket Price: <%= event.price %> Rs</p>
+      </div>
+      <% if (event.ticketsAvailable > 0){ %>
+        <a href="#booknow" class="btn btn-outline-success mb-4 rounded-pill" data-toggle="collapse" aria-expanded="false" aria-controls="booknow" style="width: 30%; margin: auto;">Book Now</a>
+      <% }else{ %>
+        <p  class="badge badge-warning mb-4 py-2" style="width: 20%; margin: auto; font-size:small;">Sold Out!</p>
+      <% } %>
+      </div>
+
+
+
+
+
+      <div class="collapse" id="booknow">
+        <div class="card card-body bg-dark">
+          <form method="post" action="/booking/booknow/<%= event._id %>">
+            <div class="form-row text-light mt-2">
+                <div class="col-md-6 d-flex p-0" style="align-items: center;" >
+                  <label for="userName" class="p-0 col-form-label col-3"><b>User Name: </b></label>
+                  <input type="text" class="form-control-plaintext col-6 text-light" id="userName" name="userName" value="<%= userName %>" readonly style="height: 2rem;width: 150px;" autocomplete="off">
+                </div>
+              <div class="col-md-6 d-flex p-0 " style="align-items: center;">
+                <label for="userEmail" class="p-0 col-form-label col-2"><b>Email: </b></label>
+                <input type="text" class="form-control-plaintext col-7 text-light" id="userEmail" name="userEmail" value="<%= userEmail %>" readonly style="height: 2rem;width: 150px;">
+              </div>
+            </div>
+            <div class="form-row mt-2" >
+            <div class="col-md-6 d-flex p-0" style="height: 2rem ;align-items: center; ">
+              <label for="location" class=" col-form-label col-3 p-0" ><b>Event Location:</b></label>
+              <input type="text" class="form-control-plaintext col-6 p-0 text-light" id="location" name="location" value="<%= event.location %>" readonly style="height: 2rem; width: 150px;">
+            </div>
+            <div class="col-md-3 d-flex p-0" style=" align-items: center;">
+              <label for="date" class=" col-form-label col-5 p-0 " ><b> Event Date:</b></label>
+              <input type="text" class="form-control-plaintext col-7 text-light" id="date" name="date" value="<%= event.date %>" readonly style="height: 2rem;">
+            </div>
+            <div class="col-md-3 d-flex p-0" style="align-items: center;">
+                <label for="eventTime" class="p-0 col-form-label col-5"><b>Event Time:</b></label>
+                <input type="text" class="form-control-plaintext col-7 text-light" id="eventTime" name="eventTime" value="<%= event.eventTime %>" readonly>
+              </div>
+            </div>
+            <div class="form-row mt-2">
+              <div class="form-group col-md-6 p-0 d-flex text-light" style="align-items: center;">
+                <label for="ticketsBooked" class="col-form-label col-3 p-0"><b>No of Tickets:</b></label>
+                <select  id="ticketsBooked" name="ticketsBooked" class="form-control-plaintext col-6 p-0 text-light"  style="height: 2rem; border-bottom: 1px solid white; width: 150px;">
+                  <option class="text-dark" selected>Choose...</option>
+                  <% const maxTickets = Math.min(3, event.ticketsAvailable);
+                      for(let i = 1; i <= maxTickets; i++) { %>
+                  <option class="text-dark" value="<%= i %>"><%= i %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div class="form-group col-md-3 d-flex p-0" style="align-items: center;">
+                <label for="totalAmount" class="col-form-label col-5 p-0"><b>Total Amount:</b></label>
+                <input type="number" class="form-control-plaintext col-6 p-0 text-light"  style="height: 2rem; border-bottom: 1px solid white;" id="totalAmount" name="totalAmount"  readonly>
+              </div>
+              <div class="form-group col-md-3 d-flex p-0" style="align-items: center;">
+                <label for="price" class="col-form-label col-5 p-0"><b>Ticket Price:</b></label>
+                <input type="number" class="form-control-plaintext col-7 p-0 text-light" id="price" name="price" value="<%= event.price %>" style="height: 2rem;" readonly>
+              </div>
+            </div>
+            <div class="row mt-3 mb-3">
+            <button type="submit" class="btn btn-primary rounded-pill " style="width: 10%; margin: auto;">Pay</button>
+          </div>
+          </form>
+          </div>
+      </div>
+
+
+  </div>
+
+  
+  
+<script src="/javascripts/booknow.js"></script>

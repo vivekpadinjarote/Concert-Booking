@@ -1,0 +1,42 @@
+<div style="width: 700px;margin: auto; margin-top: 5%; margin-bottom: 5%;">
+  <h1 class="head">Update Events</h1>
+  <div class="container mt-5">
+    <form action="/admin/update_event/<%=event._id %>" method="post">
+      <div class="row justify-content-center" style="color: white;">
+        <div class="form-group  col-12">
+          <label for="eventName">Event name</label>
+          <input type="text" class="form-control" id="eventName" name="concertName" value="<%=event.concertName%>"
+            required>
+        </div>
+        <div class="form-group col-6">
+          <label for="eventId">Event ID</label>
+          <input type="text" class="form-control" id="eventId" name="eventId" value="<%= event.eventId %>" required>
+        </div>
+        <div class="form-group col-6">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" name="location" value="<%= event.location %>" required>
+        </div>
+      </div>
+      <div class="form-row text-light">
+        <div class="col-md-3 mb-3">
+          <label for="eventTime">Event Time</label>
+          <input type="time" class="form-control" id="eventTime" name="eventTime" value="<%= event.eventTime %>">
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="date">Date</label>
+          <input type="date" class="form-control" id="date" name="date" value="<%= event.date %>">
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="price">Price</label>
+          <input type="number" class="form-control" id="price" name="price" value="<%= event.price %>" required>
+        </div>
+        <div class="col-md-3 mb-3">
+          <label for="ticketsAvailable">Available Tickets</label>
+          <input type="number" class="form-control" id="ticketsAvailable" name="ticketsAvailable"
+            value="<%= event.ticketsAvailable %>" required>
+        </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Update Event</button>
+    </form>
+  </div>
+</div>

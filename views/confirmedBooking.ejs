@@ -1,0 +1,36 @@
+<div class="container mt-5 p-5 mb-5 bg-dark text-light rounded shadow-lg">
+    <div class="text-center mb-5">
+        <h1 class="display-4 text-success">Booking Successful! 🎉</h1>
+    </div>
+    
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card bg-secondary text-light mb-3 shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-warning mb-4">🎤 Concert Details</h3>
+                    <p><strong>Concert Name:</strong> <%= bookingData.concert_id.concertName %></p>
+                    <p><strong>Location:</strong> <%= bookingData.concert_id.location %></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card bg-secondary text-light mb-3 shadow">
+                <div class="card-body">
+                    <h3 class="card-title text-warning  mb-4">📄 Booking Details</h3>
+                    <p><strong>Tickets Booked:</strong> <%= bookingData.ticketsBooked %></p>
+                    <p><strong>Total Amount:</strong> ₹<%= bookingData.totalAmount %></p>
+                    <p><strong>Email:</strong> <%= bookingData.email %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center">
+        <h2 class="mb-4">🎫 Your QR Code</h2>
+        <div class="d-inline-block p-3 bg-light rounded">
+            <img src="<%= QRCode %>" alt="QR Code" class="img-fluid rounded" style="width: 300px; height: 300px;">
+        </div>
+    </div>
+</div>
+

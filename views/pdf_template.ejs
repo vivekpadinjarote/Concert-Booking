@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 2rem;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .qr {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .qr img {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <h2 class="text-center text-primary mb-4">🎟 Booking Confirmation</h2>
+
+            <p><strong>Concert Name:</strong> <%= bookingData.concert_id.concertName %></p>
+            <p><strong>Tickets Booked:</strong> <%= bookingData.ticketsBooked %></p>
+            <p><strong>Total Amount:</strong> ₹<%= bookingData.totalAmount %></p>
+            <p><strong>Location:</strong> <%= bookingData.concert_id.location %></p>
+            <p><strong>Email:</strong> <%= bookingData.email %></p>
+
+            <% if (qrCode) { %>
+            <div class="qr">
+                <h5>Your QR Code</h5>
+                <img src="<%= qrCode %>" alt="QR Code">
+            </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

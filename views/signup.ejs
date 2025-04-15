@@ -1,0 +1,55 @@
+
+<div class="container" style="width: 500px; margin: auto; margin-top: 5%;">
+  <h2 style="text-align: center; color: white;">Sign Up</h2><br>
+  <form action="/users/signup" method="post">
+    <div class="row justify-content-center" style="color: white;">
+      <div class="form-group col-lg-12 col-md-10 col-sm-8 col-8">
+        <label for="name">Username</label>
+        <input type="text" class="form-control form-control-sm" id="name" name="username">
+      </div>
+      <div class="form-group col-lg-12 col-md-10 col-sm-8 col-8">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control form-control-sm" id="email" name="email" aria-describedby="emailHelp">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group col-lg-12 col-md-10 col-sm-8 col-8">
+        <label for="password">Password</label>
+        <input type="password" class="form-control form-control-sm" id="password" name="password">
+      </div>
+      <div class="form-group col-lg-12 col-md-10 col-sm-8 col-8">
+        <label for="confirmpassword">Confirm Password</label>
+        <input type="password" class="form-control form-control-sm" id="confirmpassword" name="confirmpassword">
+      </div>
+      <% if (message){ %>
+        <div class="text-danger">
+          <p>
+            <%= message %>
+          </p>
+        </div>
+        <% } %>
+          
+          
+    </div>
+    <div class="row justify-content-center">
+      <button type="submit" class="btn btn-primary ">Sign Up</button>
+    </div>
+    <div class="form-group form-check" style="color: white;text-align: center;">
+      <hr>
+      <p style="display: inline;font-size: smaller;">Already have an account?</p>
+      <a href="/users/login" style="font-size: smaller;" >Login here</a>
+    </div>
+    
+  </form>
+</div>
+
+<% if(errors && errors.length>0){%>
+  <div style="color: red;">
+    <ul>
+      <% errors.forEach(function(error){%>
+        <li>
+          <%= error.msg%>
+        </li>
+        <% }) %>
+    </ul>
+  </div>
+  <% } %>
