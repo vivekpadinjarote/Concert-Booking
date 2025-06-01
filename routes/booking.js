@@ -31,7 +31,7 @@ const QRcodeGenerator = (qrData)=>{
 }
 
 const pdfGenerator = async (eventId)=>{
-    const bookedEvent = await Booking.findById(eventId).populate('concert_id')
+    const bookedEvent = await Booking.findById(eventId)
 
     const template = await fs.readFile('./views/pdf_template.ejs',{encoding:'utf-8'})
     const html = ejs.render(template,{bookingData:bookedEvent,qrCode:null})
@@ -44,20 +44,20 @@ const pdfGenerator = async (eventId)=>{
     const timestamp = now.toISOString().replace(/[:.]/g, '-'); 
 
     const safeEmail = bookedEvent.email.replace(/[@.]/g, '_');
-    const concertName = bookedEvent.concert_id.concertName.replace(/\s+/g, '_');
+    const concertName = bookedEvent.concertName.replace(/\s+/g, '_');
     
     const fileName = `${safeEmail}_${concertName}_${timestamp}.pdf`;
     const filePath = path.join(__dirname, '..', 'public', 'pdfs', fileName);
     await fs.writeFile(filePath, pdfBuffer);
 
-    const pdfUrl = `/pdfs/${bookedEvent.email}_${bookedEvent.concert_id.concertName}.pdf`;
+    const pdfUrl = `/pdfs/${bookedEvent.email}_${bookedEvent.concertName}.pdf`;
 
     return pdfUrl
 }
 
 const emailSender = async (eventId,qrcode)=>{
     try{
-    const bookedEvent = await Booking.findById(eventId).populate('concert_id')
+    const bookedEvent = await Booking.findById(eventId)
 
     var transport = nodemailer.createTransport({
         host: "sandbox.smtp.mailtrap.io",
@@ -71,7 +71,7 @@ const emailSender = async (eventId,qrcode)=>{
      const template = await fs.readFile('./views/pdf_template.ejs',{encoding:'utf-8'})
      const mailOptions = {
         from:'vivekpadinjarote@gmail.com',
-        to:'gokulth@gmail.com',
+        to:bookedEvent.email,
         subject:'Ticket Booked Successfully',
         html:ejs.render(template,{bookingData:bookedEvent,qrCode:qrcode})
      }
@@ -109,10 +109,9 @@ router.post('/booknow/:id',async(req,res)=>{
         concert.ticketsAvailable= concert.ticketsAvailable - Number(ticketsBooked)
 
         await concert.save()
-        
-        const concertId = concert._id
+    
         const concertName = concert.concertName
-        const newBooking = new Booking({concert_id:concertId,concertName,email:userEmail,username:userName,ticketsBooked,totalAmount,location})
+        const newBooking = new Booking({date:concert.date,eventTime:concert.eventTime,price:concert.price,coverPic:concert.coverPic,concertName,email:userEmail,username:userName,ticketsBooked,totalAmount,location})
         await newBooking.save()
         
         res.redirect(`/booking/confirmedBooking/${newBooking._id}`)
@@ -125,7 +124,7 @@ router.post('/booknow/:id',async(req,res)=>{
 
 router.get('/confirmedBooking/:id',async(req,res)=>{
     try{
-        const bookedEvent = await Booking.findById(req.params.id).populate('concert_id')
+        const bookedEvent = await Booking.findById(req.params.id)
         if(!bookedEvent){
             return res.status(404).send('Booked Event Not Found')
         }
@@ -150,7 +149,6 @@ router.get('/mybookings',authentication,async(req,res)=>{
         const totalBookings = await Booking.countDocuments({ email: req.session.userEmail });
 
         const events = await Booking.find({ email: req.session.userEmail })
-            .populate('concert_id')
             .sort({createdAt:-1})
             .skip((page - 1) * perPage)
             .limit(perPage);
@@ -158,6 +156,7 @@ router.get('/mybookings',authentication,async(req,res)=>{
         if(!events){
             res.status(404).send("No events booked")
         }
+
         const bookingsWithQR = await Promise.all(events.map(async (event)=>{
             const data={
                 concertName: event.concertName,

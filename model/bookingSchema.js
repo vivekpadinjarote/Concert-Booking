@@ -2,10 +2,13 @@ const mongoose = require('mongoose')
 const mongoosePaginate = require('mongoose-paginate-v2')
 
 const bookingSchema=new mongoose.Schema({
-    concert_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'Concert',
-        required:[true,'Concert Id is required']
+    concertName:{
+        type: String,
+        required: [true,'Concert Name is required'],
+    },
+    location:{
+        type: String,
+        required: [true,'Venue field is required'],
     },
     email:{
         type: String,
@@ -14,6 +17,19 @@ const bookingSchema=new mongoose.Schema({
     username:{
         type: String,
         required:[true,'user name is required']
+    },
+    date:{
+        type: String,
+        required: [true,'Date of the program is required'],
+    },
+    eventTime:{
+        type:String,
+        required:[true,'Time is required'],
+    },
+    price:{
+        type: Number,
+        required:[true,'Price is required'],
+        min: [0,'price cannot be negative'],
     },
     ticketsBooked:{
         type: Number,
@@ -24,6 +40,10 @@ const bookingSchema=new mongoose.Schema({
         type: Number,
         required:[true,'Total amount is required']
     },
+    coverPic:{
+        type: String,
+        required: [true,'Upload Picture']
+    }
 },{
     timestamps:true,
 })
